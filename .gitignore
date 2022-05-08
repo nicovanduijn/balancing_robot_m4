@@ -1,0 +1,12 @@
+build/*
+.DS_STORE
+.vscode/*
+.idea/
+platform/stm32mp1/generated/.mxproject
+platform/stm32mp1/generated/.project
+platform/stm32mp1/generated/.settings/
+platform/stm32mp1/generated/CA7/
+platform/stm32mp1/generated/CM4/.cproject
+platform/stm32mp1/generated/CM4/.project
+platform/stm32mp1/generated/CM4/.settings/
+

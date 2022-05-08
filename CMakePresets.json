@@ -1,0 +1,38 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "stm32mp1",
+      "description": "Building for the stm32MP1",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "${sourceDir}/platform/stm32mp1/cmake/gcc-arm-none-eabi.cmake",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "FREERTOS_PORT": "GCC_ARM_CM4F",
+        "FREERTOS_PORT_DIR": "extern/rtos/portable/GCC/ARM_CM4F",
+        "FREERTOS_HEAP": "4",
+        "FREERTOS_CONFIG": "platform/stm32mp1/config",
+        "PLATFORM_DIR": "platform/stm32mp1"
+      }
+    },
+    {
+      "name": "posix",
+      "description": "Build the app to run locally",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "FREERTOS_PORT": "GCC_POSIX",
+        "FREERTOS_PORT_DIR": "extern/rtos/portable/ThirdParty/GCC/Posix",
+        "FREERTOS_HEAP": "3",
+        "FREERTOS_CONFIG": "platform/posix/config",
+        "PLATFORM_DIR": "platform/posix"
+      }
+    }
+  ]
+}

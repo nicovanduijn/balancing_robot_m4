@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+ssh root@192.168.7.1 'echo stop > /sys/class/remoteproc/remoteproc0/state'
+scp build/stm32mp1/common/main.elf root@192.168.7.1:/lib/firmware
+ssh root@192.168.7.1 'echo main.elf > /sys/class/remoteproc/remoteproc0/firmware'
+ssh root@192.168.7.1 'echo start > /sys/class/remoteproc/remoteproc0/state'
