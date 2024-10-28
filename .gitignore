@@ -9,4 +9,5 @@ platform/stm32mp1/generated/CA7/
 platform/stm32mp1/generated/CM4/.cproject
 platform/stm32mp1/generated/CM4/.project
 platform/stm32mp1/generated/CM4/.settings/
+platform/stm32mp1/generated/CM4/Debug/
 
