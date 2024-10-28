@@ -1,5 +1,5 @@
 # Simple makefile to expose convenience commands "make posix", "make clean" and "make stm32mp1"
-.PHONY: clean posix stm32mp1
+.PHONY: clean posix stm32mp1 flash format
 
 clean:
 	rm -rf build
@@ -12,3 +12,6 @@ stm32mp1:
 
 flash:
 	./scripts/flash
+
+format:
+	./scripts/format
