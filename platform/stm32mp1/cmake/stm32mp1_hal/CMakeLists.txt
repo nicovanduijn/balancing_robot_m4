@@ -25,6 +25,7 @@ target_include_directories(stm32mp1_hal INTERFACE
 target_sources(stm32mp1_hal INTERFACE
     ../../generated/CM4/Src/main.c
     ../../generated/CM4/Src/gpio.c
+    ../../generated/CM4/Src/i2c.c
     ../../generated/CM4/Src/stm32mp1xx_it.c
     ../../generated/CM4/Src/stm32mp1xx_hal_msp.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_cortex.c
@@ -33,6 +34,8 @@ target_sources(stm32mp1_hal INTERFACE
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_exti.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_gpio.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_hsem.c
+    ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_i2c_ex.c
+    ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_i2c.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_mdma.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_pwr_ex.c
     ../../generated/Drivers/STM32MP1xx_HAL_Driver/Src/stm32mp1xx_hal_pwr.c

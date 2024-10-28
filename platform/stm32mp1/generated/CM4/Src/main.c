@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -142,6 +143,7 @@ void init_hal(void) {
     SystemClock_Config();
   }
   MX_GPIO_Init();
+  MX_I2C5_Init();
 }
 /* USER CODE END 4 */
 

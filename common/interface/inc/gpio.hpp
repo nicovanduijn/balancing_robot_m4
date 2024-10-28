@@ -5,12 +5,6 @@ namespace Interface {
 
 class Gpio {
    public:
-    enum class Function { RUN_LED = 0 };
-
-    Gpio(Function function) {
-        (void)function;  // enforce a function is implemented by driver
-    };
-
     virtual ~Gpio() = default;
 
     virtual void on() = 0;

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "common/interface/inc/gpio.hpp"
+#include "common/interface/inc/drivers.hpp"
 
 namespace Driver {
 
 class Gpio : public Common::Interface::Gpio {
    public:
-    Gpio(Common::Interface::Gpio::Function function);
+    Gpio(Common::Interface::Functionality functionality){};
 
     virtual void toggle() final;
     virtual void on() final;
