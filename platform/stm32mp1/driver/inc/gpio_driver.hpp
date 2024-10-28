@@ -1,5 +1,6 @@
 #pragma once
 
+#include "common/interface/inc/drivers.hpp"
 #include "common/interface/inc/gpio.hpp"
 #include "platform/stm32mp1/generated/CM4/Core/Inc/gpio.h"
 
@@ -7,7 +8,7 @@ namespace Driver {
 
 class Gpio : public Common::Interface::Gpio {
    public:
-    Gpio(Common::Interface::Gpio::Function function);
+    Gpio(Common::Interface::Functionality functionality);
 
     virtual void toggle() final;
     virtual void on() final;
