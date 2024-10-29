@@ -1,10 +1,11 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32mp1xx_it.h
-  * @brief   This file contains the headers of the interrupt handlers.
+  * @file   openamp.h
+  * @brief  Header for openamp applications
+  * @author  MCD Application Team
   ******************************************************************************
-  * @attention
+   * @attention
   *
   * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
@@ -18,8 +19,11 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32MP1xx_IT_H
-#define __STM32MP1xx_IT_H
+#ifndef __openamp_H
+#define __openamp_H
+
+#include "openamp/open_amp.h"
+#include "openamp_conf.h"
 
 #ifdef __cplusplus
  extern "C" {
@@ -40,26 +44,42 @@
 
 /* USER CODE END EC */
 
+/* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END  Private defines */
+
+#define OPENAMP_send  rpmsg_send
+#define OPENAMP_destroy_ept rpmsg_destroy_ept
+
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void DebugMon_Handler(void);
-void IPCC_RX1_IRQHandler(void);
-void IPCC_TX1_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
+/* Initialize the openamp framework*/
+int MX_OPENAMP_Init(int RPMsgRole, rpmsg_ns_bind_cb ns_bind_cb);
+
+/* Deinitialize the openamp framework*/
+void OPENAMP_DeInit(void);
+
+/* Create and register the endpoint */
+int OPENAMP_create_endpoint(struct rpmsg_endpoint *ept, const char *name,
+                            uint32_t dest, rpmsg_ept_cb cb,
+                            rpmsg_ns_unbind_cb unbind_cb);
+
+/* Check for new rpmsg reception */
+void OPENAMP_check_for_message(void);
+
+/* Wait loop on endpoint ready ( message dest address is know)*/
+void OPENAMP_Wait_EndPointready(struct rpmsg_endpoint *rp_ept);
+
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* __STM32MP1xx_IT_H */
+#endif /*__openamp_H */

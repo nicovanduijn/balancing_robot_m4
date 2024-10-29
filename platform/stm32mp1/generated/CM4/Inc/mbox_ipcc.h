@@ -1,10 +1,11 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    stm32mp1xx_it.h
-  * @brief   This file contains the headers of the interrupt handlers.
+  * @file    mbox_ipcc.h
+  * @author  MCD Application Team
+  * @brief   Header for mbox_ipcc.c module
   ******************************************************************************
-  * @attention
+   * @attention
   *
   * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
@@ -17,13 +18,8 @@
   */
 /* USER CODE END Header */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __STM32MP1xx_IT_H
-#define __STM32MP1xx_IT_H
-
-#ifdef __cplusplus
- extern "C" {
-#endif
+#ifndef MBOX_IPCC_H_
+#define MBOX_IPCC_H_
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -40,26 +36,23 @@
 
 /* USER CODE END EC */
 
+/* Private defines -----------------------------------------------------------*/
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END  Private defines */
+
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-void NMI_Handler(void);
-void HardFault_Handler(void);
-void MemManage_Handler(void);
-void BusFault_Handler(void);
-void UsageFault_Handler(void);
-void DebugMon_Handler(void);
-void IPCC_RX1_IRQHandler(void);
-void IPCC_TX1_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */
 
-#ifdef __cplusplus
-}
-#endif
+int MAILBOX_Notify(void *priv, uint32_t id);
+int MAILBOX_Init(void);
+int MAILBOX_Poll(struct virtio_device *vdev);
 
-#endif /* __STM32MP1xx_IT_H */
+#endif /* MBOX_IPCC_H_ */

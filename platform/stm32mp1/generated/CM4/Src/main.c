@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "ipcc.h"
+#include "openamp.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
