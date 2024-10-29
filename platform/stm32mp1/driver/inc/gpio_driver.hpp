@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common/interface/inc/gpio.hpp"
-#include "platform/stm32mp1/generated/CM4/Inc/gpio.h"
+#include "platform/stm32mp1/generated/CM4/Core/Inc/gpio.h"
 
 namespace Driver {
 
