@@ -35,7 +35,7 @@ list(FILTER SRCS EXCLUDE REGEX ".*/proxy/.*") # This file gets generated but not
 
 target_sources(stm32mp1_hal INTERFACE
     ${SRCS}
-    ../../generated/CM4/Startup/startup_stm32mp157facx.s
+    ../../generated/CM4/Core/Startup/startup_stm32mp157facx.s
 )
 
 target_link_directories(stm32mp1_hal INTERFACE
