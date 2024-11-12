@@ -13,7 +13,7 @@ GPIO_TypeDef* getPort(Common::Interface::Gpio::Function function) {
 
 uint16_t getPin(Common::Interface::Gpio::Function function) {
     (void)function;  // todo: add lookup table!
-    return GPIO_PIN_14;
+    return GPIO_PIN_13;
 }
 
 }  // namespace Bsp
