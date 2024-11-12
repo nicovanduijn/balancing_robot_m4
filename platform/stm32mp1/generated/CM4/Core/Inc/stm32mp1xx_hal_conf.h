@@ -167,7 +167,7 @@
   * @brief This is the HAL system configuration section
   */
 #define  VDD_VALUE                    3300U /*!< Value of VDD in mv */
-#define  TICK_INT_PRIORITY            1U /*!< tick interrupt priority (lowest by default) */
+#define  TICK_INT_PRIORITY            15U /*!< tick interrupt priority (lowest by default) */
                                                                 /*  Warning: Must be set to higher priority for HAL_Delay()  */
                                                                 /*  and HAL_GetTick() usage under interrupt context          */
 #define  USE_RTOS                     0U
