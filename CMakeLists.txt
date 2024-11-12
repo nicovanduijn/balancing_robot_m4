@@ -5,6 +5,9 @@ set(CMAKE_C_EXTENSIONS ON)
 enable_language(CXX C ASM)
 project(balancing_robot C CXX ASM)
 
+set(CMAKE_C_COMPILER_LAUNCHER ccache)
+set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
+
 include_directories(
     ${CMAKE_SOURCE_DIR} 
     extern/rtos/include 
