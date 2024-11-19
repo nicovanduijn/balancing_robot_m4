@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# Locate STM32CubeIDE installation and tools
+locate_cubeide() {
+    if command -v stm32cubeide &>/dev/null; then
+        echo $(dirname $(readlink -f $(which stm32cubeide)))
+    elif [[ -d "/opt/st" ]]; then
+        find /opt/st -maxdepth 1 -name "stm32cubeide_*" -type d | head -n 1
+    else
+        echo ""
+    fi
+}
+
+base_dir=$(locate_cubeide)
+
+if [[ -z "$base_dir" ]]; then
+    echo "STM32CubeIDE not found in PATH or /opt/st."
+    exit 1
+fi
+
+openocd_path=$(find "$base_dir" -name openocd -path "*/tools/bin/openocd" 2>/dev/null | head -n 1)
+gdb_path=$(find "$base_dir" -name arm-none-eabi-gdb -path "*/tools/bin/arm-none-eabi-gdb" 2>/dev/null | head -n 1)
+
+if [[ -z "$openocd_path" || -z "$gdb_path" ]]; then
+    echo "Unable to locate OpenOCD or GDB within STM32CubeIDE installation."
+    exit 1
+fi
+
+# Create .vscode/ directory
+mkdir -p .vscode
+
+# Write launch.json
+cat > .vscode/launch.json <<EOL
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to STM32MP1",
+            "type": "cortex-debug",
+            "cwd": "\${workspaceRoot}",
+            "executable": "\${workspaceRoot}/build/stm32mp1/common/main.elf",
+            "request": "attach",
+            "servertype": "external",
+            "gdbPath": "$gdb_path",
+            "device": "STM32MP157CAA",
+            "gdbTarget": "localhost:3333",
+            "svdFile": "\${workspaceRoot}/platform/stm32mp1/STM32MP157x.svd",
+            "preLaunchTask": "Start OpenOCD"
+        },
+        {
+            "name": "Debug Simulation",
+            "type": "cppdbg",
+            "cwd": "\${workspaceRoot}",
+            "program": "\${workspaceRoot}/build/posix/common/main",
+            "request": "launch",
+            "preLaunchTask": "Build simulation"
+        }
+    ]
+}
+EOL
+
+# Write tasks.json
+cat > .vscode/tasks.json <<EOL
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build simulation",
+            "type": "shell",
+            "command": "make",
+            "args": ["posix"]
+        },
+        {
+            "label": "Build stm32mp1",
+            "type": "shell",
+            "command": "make",
+            "args": ["stm32mp1"]
+        },
+        {
+            "label": "Flash stm32mp1",
+            "type": "shell",
+            "command": "make",
+            "args": ["flash"],
+            "dependsOn": "Build stm32mp1"
+        },
+        {
+            "label": "Start OpenOCD",
+            "dependsOn": "Flash stm32mp1",
+            "type": "shell",
+            "command": "$openocd_path",
+            "args": [
+                "-f", "\${workspaceFolder}/platform/stm32mp1/openocd/balancing_robot_openocd.cfg",
+                "-s", "\${workspaceFolder}/platform/stm32mp1/openocd/",
+                "-c", "gdb_report_data_abort enable"
+            ],
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "."
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": ".*",
+                    "endsPattern": "Listening on port 3333"
+                }
+            }
+        }
+    ]
+}
+EOL
+
+echo "VSCode configuration files generated successfully in .vscode/"

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#!/bin/bash
 
 usage() {
     echo "Convenience script to format all relevant C and C++ files \r\n"
