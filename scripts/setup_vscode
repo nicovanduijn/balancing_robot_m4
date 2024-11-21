@@ -1,7 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Function to detect if running in WSL
+is_wsl() {
+    if grep -qEi "(microsoft|wsl)" /proc/version &>/dev/null; then
+        return 0 
+    else
+        return 1  
+    fi
+}
 
 # Locate STM32CubeIDE installation and tools
-locate_cubeide() {
+locate_cubeide_native() {
     if command -v stm32cubeide &>/dev/null; then
         echo $(dirname $(readlink -f $(which stm32cubeide)))
     elif [[ -d "/opt/st" ]]; then
@@ -11,22 +20,56 @@ locate_cubeide() {
     fi
 }
 
-base_dir=$(locate_cubeide)
+# Function to find CubeIDE in WSL by checking known Windows installation paths
+locate_cubeide_wsl() {
+    local possible_dirs=(
+        "/mnt/c/Program Files/STMicroelectronics"
+        "/mnt/c/ST"
+        "/mnt/c/Program Files (x86)/STMicroelectronics"
+    )
 
-if [[ -z "$base_dir" ]]; then
-    echo "STM32CubeIDE not found in PATH or /opt/st."
-    exit 1
+    for dir in "${possible_dirs[@]}"; do
+        if [[ -d "$dir" ]]; then
+            # Look for CubeIDE in the directories, support multiple versions
+            found_dir=$(find "$dir" -type d -name "STM32CubeIDE*" 2>/dev/null | head -n 1)
+            if [[ -n "$found_dir" ]]; then
+                echo "$found_dir"
+                return
+            fi
+        fi
+    done
+
+    echo ""  # If not found
+}
+
+if is_wsl; then
+    # Running in WSL, search for CubeIDE installation on the Windows side
+    base_dir=$(locate_cubeide_wsl)
+    if [[ -z "$base_dir" ]]; then
+        echo "STM32CubeIDE not found in expected Windows directories."
+        exit 1
+    fi
+
+    openocd_path=$(find "$base_dir" -name openocd.exe -path "*/tools/bin/openocd.exe" 2>/dev/null | head -n 1)
+    gdb_path=$(find "$base_dir" -name arm-none-eabi-gdb.exe -path "*/tools/bin/arm-none-eabi-gdb.exe" 2>/dev/null | head -n 1)
+else
+    # Running on native Linux, find CubeIDE installation
+    base_dir=$(locate_cubeide_native)
+    if [[ -z "$base_dir" ]]; then
+        echo "STM32CubeIDE not found in PATH or /opt/st."
+        exit 1
+    fi
+
+    openocd_path=$(find "$base_dir" -name openocd -path "*/tools/bin/openocd" 2>/dev/null | head -n 1)
+    gdb_path=$(find "$base_dir" -name arm-none-eabi-gdb -path "*/tools/bin/arm-none-eabi-gdb" 2>/dev/null | head -n 1)
 fi
-
-openocd_path=$(find "$base_dir" -name openocd -path "*/tools/bin/openocd" 2>/dev/null | head -n 1)
-gdb_path=$(find "$base_dir" -name arm-none-eabi-gdb -path "*/tools/bin/arm-none-eabi-gdb" 2>/dev/null | head -n 1)
 
 if [[ -z "$openocd_path" || -z "$gdb_path" ]]; then
     echo "Unable to locate OpenOCD or GDB within STM32CubeIDE installation."
     exit 1
 fi
 
-# Create .vscode/ directory
+
 mkdir -p .vscode
 
 # Write launch.json
@@ -109,4 +152,21 @@ cat > .vscode/tasks.json <<EOL
 }
 EOL
 
-echo "VSCode configuration files generated successfully in .vscode/"
+# Update settings.json to allow UNC hosts (if running in WSL)
+if is_wsl; then
+    wsl_config_file="$HOME/.vscode/settings.json"
+
+    # Ensure the settings.json exists
+    mkdir -p "$(dirname "$wsl_config_file")"
+
+    # Append the necessary setting for UNC hosts
+    cat >> "$wsl_config_file" <<EOL
+{
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ]
+}
+EOL
+fi
+
+echo "VSCode configuration files generated successfully in .vscode/ and settings updated."
