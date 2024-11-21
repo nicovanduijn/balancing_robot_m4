@@ -169,4 +169,26 @@ if is_wsl; then
 EOL
 fi
 
+cat > .vscode/c_cpp_properties.json <<EOL
+{
+    "configurations": [
+        {
+            "name": "STM32",
+            "compileCommands": "build/stm32mp1/compile_commands.json",
+            "compilerPath": "/usr/bin/arm-none-eabi-g++",
+            "cStandard": "c99",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Native",
+            "compileCommands": "build/posix/compile_commands.json",
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c99",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
+EOL
+
 echo "VSCode configuration files generated successfully in .vscode/ and settings updated."
