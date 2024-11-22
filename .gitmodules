@@ -1,3 +1,6 @@
 [submodule "extern/rtos"]
 	path = extern/rtos
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "extern/serialcomlib"]
+	path = extern/serialcomlib
+	url = https://bitbucket.zuehlke.com/scm/embsw/yoctoqtdemo-serialcomlib.git
