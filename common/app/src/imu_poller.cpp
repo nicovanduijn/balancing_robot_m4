@@ -10,7 +10,7 @@ ImuPoller::ImuPoller(Interface::Imu& imu)
 void ImuPoller::threadFunction() {
     for (;;) {
         m_imu.getXAcceleration_mpss();
-        vTaskDelay(IMU_PERIOD_ms);
+        vTaskDelay(pdMS_TO_TICKS(IMU_PERIOD_ms));
     }
 }
 

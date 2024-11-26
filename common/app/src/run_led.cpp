@@ -12,7 +12,7 @@ RunLed::RunLed(Interface::Gpio& gpio)
 void RunLed::threadFunction() {
     for (;;) {
         m_led.toggle();
-        vTaskDelay(BLINK_PERIOD_ms);
+        vTaskDelay(pdMS_TO_TICKS(BLINK_PERIOD_ms));
     }
 }
 }  // namespace App
