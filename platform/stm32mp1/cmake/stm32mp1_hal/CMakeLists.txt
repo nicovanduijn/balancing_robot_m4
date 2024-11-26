@@ -28,6 +28,7 @@ target_include_directories(stm32mp1_hal INTERFACE
     ../../generated/Drivers/CMSIS/Include
     ../../generated/Middlewares/Third_Party/OpenAMP/libmetal/lib/include
     ../../generated/Middlewares/Third_Party/OpenAMP/open-amp/lib/include
+    ../../generated/Middlewares/Third_Party/OpenAMP/virtual_driver
 )
 
 file(GLOB_RECURSE SRCS "${CMAKE_CURRENT_SOURCE_DIR}/../../generated/*.c")
