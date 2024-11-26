@@ -205,7 +205,6 @@ void init_hal(void) {
     MX_TIM1_Init();
     MX_TIM6_Init();
     MX_TIM7_Init();
-    VIRT_UART_Init(&huart0)
     log_info("All peripherals initialized\n");
 }
 
