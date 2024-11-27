@@ -8,7 +8,8 @@ namespace App {
 
 void init_application(Common::Interface::Drivers& drivers) {
     static Common::App::RunLed led{drivers.runLed};
-    static Common::App::ImuPoller imuPoller{drivers.imu};
+    static Common::App::A7Communicator communicator{drivers.communicationUart};
+    static Common::App::ImuPoller imuPoller{drivers.imu, communicator};
     return;
 }
 
