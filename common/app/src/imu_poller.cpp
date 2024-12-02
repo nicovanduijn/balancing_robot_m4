@@ -8,12 +8,7 @@ ImuPoller::ImuPoller(Interface::Imu& imu, Interface::Estimator& estimator,
     : Task{"imuPoller", configMINIMAL_STACK_SIZE, configDEFAULT_TASK_PRIO},
       m_imu{imu},
       m_estimator{estimator},
-      m_a7Communicator{a7Communicator} {
-    m_a7Communicator.subscribeToDataId(SCOM_ID_PID_VALUES, [this](void) {
-        auto controlPIDValues = m_a7Communicator.getControlPIDValues();
-        m_estimator.setEstimatorParameters(controlPIDValues.K_comp_filter);
-    });
-}
+      m_a7Communicator{a7Communicator} {}
 
 void ImuPoller::threadFunction() {
     for (;;) {
