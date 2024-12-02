@@ -5,7 +5,13 @@
 namespace Common {
 namespace App {
 
-SimpleLowPass::SimpleLowPass() {}
+SimpleLowPass::SimpleLowPass(A7Communicator& a7communicator)
+    : m_a7_communicator{a7communicator} {
+    m_a7_communicator.subscribeToDataId(SCOM_ID_PID_VALUES, [this](void) {
+        auto controlPIDValues = m_a7_communicator.getControlPIDValues();
+        setEstimatorParameters(controlPIDValues.K_comp_filter);
+    });
+}
 
 SimpleLowPass::~SimpleLowPass() {}
 
