@@ -4,3 +4,6 @@
 [submodule "extern/serialcomlib"]
 	path = extern/serialcomlib
 	url = https://bitbucket.zuehlke.com/scm/embsw/yoctoqtdemo-serialcomlib.git
+[submodule "extern/eigen"]
+	path = extern/eigen
+	url = https://gitlab.com/libeigen/eigen.git
