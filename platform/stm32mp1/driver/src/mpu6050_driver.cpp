@@ -65,43 +65,22 @@ Mpu6050::Mpu6050(Common::Interface::Functionality functionality)
     init();
 }
 
-float Mpu6050::getXAcceleration_mpss() {
+Eigen::Vector3f Mpu6050::getAcceleration_mpss() {
     readAccel();
-    float acceleration_x_mpss = m_AccelScaleFactor * m_Accelerometer_X;
-    return acceleration_x_mpss;
+    Eigen::Vector3f acceleration{m_AccelScaleFactor * m_Accelerometer_X,
+                                 m_AccelScaleFactor * m_Accelerometer_Y,
+                                 m_AccelScaleFactor * m_Accelerometer_Z};
+    return acceleration;
 }
 
-float Mpu6050::getYAcceleration_mpss() {
-    readAccel();
-    float acceleration_y_mpss = m_AccelScaleFactor * m_Accelerometer_Y;
-    return acceleration_y_mpss;
-}
-
-float Mpu6050::getZAcceleration_mpss() {
-    readAccel();
-    float acceleration_z_mpss = m_AccelScaleFactor * m_Accelerometer_Z;
-    return acceleration_z_mpss;
-}
-
-float Mpu6050::getXRotationalVelocity_radps() {
+Eigen::Vector3f Mpu6050::getRotationalVelocity_radps() {
     readGyro();
-    float rotational_velocity_x_radps =
-        static_cast<float>((m_GyroScaleFactor * m_Gyroscope_X) * DEG_TO_RAD);
-    return rotational_velocity_x_radps;
-}
+    Eigen::Vector3f rotational_velocity_radps{
+        m_GyroScaleFactor * m_Gyroscope_X * DEG_TO_RAD,
+        m_GyroScaleFactor * m_Gyroscope_Y * DEG_TO_RAD,
+        m_GyroScaleFactor * m_Gyroscope_Z * DEG_TO_RAD};
 
-float Mpu6050::getYRotationalVelocity_radps() {
-    readGyro();
-    float rotational_velocity_y_radps =
-        static_cast<float>((m_GyroScaleFactor * m_Gyroscope_Y) * DEG_TO_RAD);
-    return rotational_velocity_y_radps;
-}
-
-float Mpu6050::getZRotationalVelocity_radps() {
-    readGyro();
-    float rotational_velocity_z_radps =
-        static_cast<float>((m_GyroScaleFactor * m_Gyroscope_Z) * DEG_TO_RAD);
-    return rotational_velocity_z_radps;
+    return rotational_velocity_radps;
 }
 
 Mpu6050::MPU6050_Result Mpu6050::init() {
