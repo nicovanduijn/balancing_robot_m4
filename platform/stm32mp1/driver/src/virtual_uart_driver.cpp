@@ -32,7 +32,7 @@ VirtualUart::~VirtualUart() {}
 
 bool VirtualUart::transmit(const uint8_t *const transmitBuffer,
                            std::size_t numberOfBytesToTransmit) {
-    log_info("Virtual UART sending %d bytes\n\r", numberOfBytesToTransmit);
+    OPENAMP_check_for_message(); // Needs to be called periodically for Rx to work, so until we have an independent polling task, this is required
     VIRT_UART_Transmit(&m_huart0, transmitBuffer, numberOfBytesToTransmit);
     return true;
 }
