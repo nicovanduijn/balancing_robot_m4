@@ -2,11 +2,9 @@
 
 namespace Driver {
 
-float Imu::getXAcceleration_mpss() { return 0.f; }
-float Imu::getYAcceleration_mpss() { return 0.f; }
-float Imu::getZAcceleration_mpss() { return 0.f; }
-float Imu::getXRotationalVelocity_radps() { return 0.f; }
-float Imu::getYRotationalVelocity_radps() { return 0.f; }
-float Imu::getZRotationalVelocity_radps() { return 0.f; }
+Eigen::Vector3f Imu::getAcceleration_mpss() { return Eigen::Vector3f::Zero(); }
+Eigen::Vector3f Imu::getRotationalVelocity_radps() {
+    return Eigen::Vector3f::Zero();
+}
 
 }  // namespace Driver

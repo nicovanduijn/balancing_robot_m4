@@ -18,13 +18,9 @@ class Mpu6050 : public Common::Interface::Imu {
     Mpu6050(Common::Interface::Functionality functionality);
     ~Mpu6050() override = default;
 
-    float getXAcceleration_mpss() final;
-    float getYAcceleration_mpss() final;
-    float getZAcceleration_mpss() final;
-    float getXRotationalVelocity_radps() final;
-    float getYRotationalVelocity_radps() final;
-    float getZRotationalVelocity_radps() final;
-
+    Eigen::Vector3f getAcceleration_mpss() final;
+    Eigen::Vector3f getRotationalVelocity_radps() final;
+    
     typedef enum {
         MPU6050_Result_Ok = 0x00,
         MPU6050_Result_Error,
