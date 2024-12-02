@@ -3,15 +3,25 @@
 namespace Common {
 namespace App {
 
-ImuPoller::ImuPoller(Interface::Imu& imu, A7Communicator& a7Communicator)
+ImuPoller::ImuPoller(Interface::Imu& imu, Interface::Estimator& estimator,
+                     A7Communicator& a7Communicator)
     : Task{"imuPoller", configMINIMAL_STACK_SIZE, configDEFAULT_TASK_PRIO},
       m_imu{imu},
-      m_a7Communicator{a7Communicator} {}
+      m_estimator{estimator},
+      m_a7Communicator{a7Communicator} {
+    m_a7Communicator.subscribeToDataId(SCOM_ID_PID_VALUES, [this](void) {
+        auto controlPIDValues = m_a7Communicator.getControlPIDValues();
+        m_estimator.setEstimatorParameters(controlPIDValues.K_comp_filter);
+    });
+}
 
 void ImuPoller::threadFunction() {
     for (;;) {
-        auto value = m_imu.getXAcceleration_mpss();
-        m_a7Communicator.sendAngle(0, static_cast<int16_t>(100 * value));
+        auto acceleration_mpss = m_imu.getAcceleration_mpss();
+        m_estimator.addAccelerometerMeasurement(acceleration_mpss);
+        Eigen::Vector4f current_state = m_estimator.getCurrentState();
+        float current_pitch_degrees = 57.295f * current_state(2);
+        m_a7Communicator.sendAngle(0, current_pitch_degrees);
         vTaskDelay(pdMS_TO_TICKS(IMU_PERIOD_ms));
     }
 }
