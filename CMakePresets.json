@@ -26,6 +26,7 @@
       "description": "Build the app to run locally",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CMAKE_BUILD_TYPE": "Debug",
         "FREERTOS_PORT": "GCC_POSIX",
         "FREERTOS_PORT_DIR": "extern/rtos/portable/ThirdParty/GCC/Posix",
