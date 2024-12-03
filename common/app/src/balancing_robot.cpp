@@ -32,7 +32,8 @@ void BalancingRobot::threadFunction() {
         auto control = m_controller.getControl();
         m_a7_communicator.sendDebug(control, 0.0f, 0.0f, 0.0f);
 
-        vTaskDelay(pdMS_TO_TICKS(IMU_PERIOD_ms));
+
+        vTaskDelay(pdMS_TO_TICKS(CONTROL_LOOP_PERIOD_ms));
     }
 }
 
