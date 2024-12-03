@@ -26,7 +26,7 @@ class SimpleLowPass : public Interface::Estimator {
     Eigen::Vector4f m_current_state{0.0f, 0.0f, 0.0f, 0.0f};
     Eigen::Vector3f m_accelerometer_offsets{0.0f, 0.0f, 0.0f};
     Eigen::Vector3f m_gyroscope_offsets{0.0f, 0.0f, 0.0f};
-    float m_alpha{0.1f};
+    float m_alpha{0.98f};
     A7Communicator& m_a7_communicator;
 };
 
