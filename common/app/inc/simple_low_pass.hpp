@@ -8,7 +8,7 @@ namespace App {
 
 class SimpleLowPass : public Interface::Estimator {
    public:
-    SimpleLowPass(A7Communicator& communicator);
+    SimpleLowPass(A7Communicator& a7_communicator);
     ~SimpleLowPass();
 
     virtual void addAccelerometerMeasurement(
