@@ -6,11 +6,15 @@ namespace App {
 BalancingRobot::BalancingRobot(Interface::Imu& imu,
                                Interface::Estimator& estimator,
                                Interface::Controller& controller,
+                               Interface::Motor& left_motor,
+                               Interface::Motor& right_motor,
                                A7Communicator& a7_communicator)
     : Task{"BalancingRobot", configMINIMAL_STACK_SIZE, configDEFAULT_TASK_PRIO},
       m_imu{imu},
       m_estimator{estimator},
       m_controller{controller},
+      m_left_motor{left_motor},
+      m_right_motor{right_motor},
       m_a7_communicator{a7_communicator} {
     const Eigen::Vector4f desired_state{0.0f, 0.0f, 0.0f, 0.0f};
     m_controller.setDesiredState(desired_state);
@@ -32,6 +36,8 @@ void BalancingRobot::threadFunction() {
         auto control = m_controller.getControl();
         m_a7_communicator.sendDebug(control, 0.0f, 0.0f, 0.0f);
 
+        m_left_motor.setMotorSpeed(control);
+        m_right_motor.setMotorSpeed(control);
 
         vTaskDelay(pdMS_TO_TICKS(CONTROL_LOOP_PERIOD_ms));
     }
