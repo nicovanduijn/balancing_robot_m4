@@ -9,7 +9,6 @@ class Imu {
 
     virtual Eigen::Vector3f getAcceleration_mpss() = 0;
     virtual Eigen::Vector3f getRotationalVelocity_radps() = 0;
-
 };
 
 }  // namespace Interface
