@@ -8,6 +8,7 @@ REMOTE_PROC="/sys/class/remoteproc/remoteproc0"
 REMOTE_PATH="/lib/firmware"
 FIRMWARE_FILE="main.elf"
 ELF_PATH="build/stm32mp1/common/${FIRMWARE_FILE}"
+GUI_PROCESS="qt-app"
 
 # Function to check the remote processor state
 check_remote_state() {
@@ -30,6 +31,11 @@ ensure_offline_state() {
     done
 }
 
+restart_gui() {
+    echo "Restarting GUI..."
+    ssh "${REMOTE_HOST}" "systemctl restart ${GUI_PROCESS}"
+}
+
 # Main flashing process
 echo "Starting firmware flashing process..."
 
@@ -49,3 +55,7 @@ echo "Starting remote processor..."
 ssh "${REMOTE_HOST}" "echo start > ${REMOTE_PROC}/state"
 
 echo "Firmware flashed successfully."
+
+# Restart GUI
+restart_gui
+echo "GUI restarted successfully."
