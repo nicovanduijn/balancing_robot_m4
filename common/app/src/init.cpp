@@ -13,8 +13,8 @@ void init_application(Common::Interface::Drivers& drivers) {
     static Common::App::SimpleLowPass simple_low_pass_filter{communicator};
     static Common::App::Pid simple_pid_controller{communicator};
     static Common::App::BalancingRobot main_logic{
-        drivers.imu, simple_low_pass_filter, simple_pid_controller,
-        communicator};
+        drivers.imu,       simple_low_pass_filter, simple_pid_controller,
+        drivers.leftMotor, drivers.rightMotor,     communicator};
     return;
 }
 

@@ -20,7 +20,7 @@ class Mpu6050 : public Common::Interface::Imu {
 
     Eigen::Vector3f getAcceleration_mpss() final;
     Eigen::Vector3f getRotationalVelocity_radps() final;
-    
+
     typedef enum {
         MPU6050_Result_Ok = 0x00,
         MPU6050_Result_Error,
