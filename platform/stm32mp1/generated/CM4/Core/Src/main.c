@@ -144,10 +144,10 @@ void init_hal(void){
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C5_Init();
-  MX_TIM1_Init();
   MX_TIM5_Init();
-  MX_TIM6_Init();
-  MX_TIM7_Init();
+  MX_TIM3_Init();
+  MX_TIM4_Init();
+  MX_TIM12_Init();
   log_info("All peripherals initialized\n");
 
 
