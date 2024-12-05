@@ -54,8 +54,6 @@ void UsageFault_Handler(void);
 void DebugMon_Handler(void);
 void TIM2_IRQHandler(void);
 void TIM5_IRQHandler(void);
-void TIM6_IRQHandler(void);
-void TIM7_IRQHandler(void);
 void IPCC_RX1_IRQHandler(void);
 void IPCC_TX1_IRQHandler(void);
 void I2C5_EV_IRQHandler(void);
