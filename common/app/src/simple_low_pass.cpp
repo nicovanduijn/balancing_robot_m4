@@ -19,7 +19,7 @@ void SimpleLowPass::addAccelerometerMeasurement(
     const Eigen::Vector3f& measurement) {
     const Eigen::Vector3f corrected_measurement =
         measurement - m_accelerometer_offsets;
-    const float measured_pitch =
+    const float measured_pitch = 1.5708f -
         atan2(corrected_measurement.z(), corrected_measurement.x());
     m_current_state(Interface::Estimator::ControlState::THETA) =
         m_alpha * measured_pitch +

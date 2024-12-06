@@ -4,7 +4,14 @@ namespace Common {
 namespace App {
 
 Pid::Pid(A7Communicator& a7_communicator)
-    : m_a7_communicator{a7_communicator} {}
+    : m_a7_communicator{a7_communicator} {
+         m_a7_communicator.subscribeToDataId(SCOM_ID_PID_VALUES, [this](void) {
+        auto controlPIDValues = m_a7_communicator.getControlPIDValues();
+        m_kp = controlPIDValues.P_value;
+        m_ki = controlPIDValues.I_value;
+        m_kd = controlPIDValues.D_value;
+    });
+    }
 Pid::~Pid() {}
 
 void Pid::setCurrentState(const Eigen::Vector4f& state) {

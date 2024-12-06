@@ -9,11 +9,11 @@ Motor::Motor(Driver::Pwm& high_side, Driver::Pwm& low_side)
 
 void Motor::setMotorSpeed(float duty_cycle_normalized) {
     if (duty_cycle_normalized > 0.0f) {
-        m_high_side.setDutyCycle(duty_cycle_normalized);
-        m_low_side.setDutyCycle(0.0f);
+        m_high_side.setDutyCycle(static_cast<uint16_t>(100.f*duty_cycle_normalized));
+        m_low_side.setDutyCycle(0);
     } else {
-        m_high_side.setDutyCycle(0.0f);
-        m_low_side.setDutyCycle(-duty_cycle_normalized);
+        m_high_side.setDutyCycle(0);
+        m_low_side.setDutyCycle(static_cast<uint16_t>(-100.f*duty_cycle_normalized));
     }
 }
 
