@@ -30,9 +30,9 @@ TIM_HandleTypeDef* getTimHandle(
     Common::Interface::Functionality functionality) {
     switch (functionality) {
         case Common::Interface::Functionality::MOTOR_LEFT_HIGH_SIDE:
-            return &htim5;
-        case Common::Interface::Functionality::MOTOR_LEFT_LOW_SIDE:
             return &htim4;
+        case Common::Interface::Functionality::MOTOR_LEFT_LOW_SIDE:
+            return &htim5;
         case Common::Interface::Functionality::MOTOR_RIGHT_HIGH_SIDE:
             return &htim3;
         case Common::Interface::Functionality::MOTOR_RIGHT_LOW_SIDE:
@@ -45,9 +45,9 @@ TIM_HandleTypeDef* getTimHandle(
 uint32_t getTimChannel(Common::Interface::Functionality functionality) {
     switch (functionality) {
         case Common::Interface::Functionality::MOTOR_LEFT_HIGH_SIDE:
-            return TIM_CHANNEL_2;
-        case Common::Interface::Functionality::MOTOR_LEFT_LOW_SIDE:
             return TIM_CHANNEL_3;
+        case Common::Interface::Functionality::MOTOR_LEFT_LOW_SIDE:
+            return TIM_CHANNEL_2;
         case Common::Interface::Functionality::MOTOR_RIGHT_HIGH_SIDE:
             return TIM_CHANNEL_2;
         case Common::Interface::Functionality::MOTOR_RIGHT_LOW_SIDE:
