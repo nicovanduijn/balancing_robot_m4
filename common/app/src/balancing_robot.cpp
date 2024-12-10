@@ -30,11 +30,15 @@ void BalancingRobot::threadFunction() {
 
         Eigen::Vector4f current_state = m_estimator.getCurrentState();
         float current_pitch_degrees = 57.295f * current_state(2);
-        m_a7_communicator.sendAngle(0, current_pitch_degrees);
 
         m_controller.setCurrentState(current_state);
         auto control = m_controller.getControl();
-        m_a7_communicator.sendDebug(control, 0.0f, 0.0f, 0.0f);
+
+        if(++m_comm_loop_counter >= 20U) {
+            m_comm_loop_counter = 0U;
+            m_a7_communicator.sendAngle(0, current_pitch_degrees);
+            m_a7_communicator.sendDebug(control, 0.0f, 0.0f, 0.0f);
+        }
 
         m_left_motor.setMotorSpeed(control);
         m_right_motor.setMotorSpeed(control);

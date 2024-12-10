@@ -18,7 +18,8 @@ class BalancingRobot : public Rtos::Task {
                    A7Communicator& a7_communicator);
 
    private:
-    static constexpr uint32_t CONTROL_LOOP_PERIOD_ms = 500u;
+    static constexpr uint32_t CONTROL_LOOP_PERIOD_ms = 50u;
+    uint32_t m_comm_loop_counter = 0U;
     void threadFunction() override;
     Interface::Imu& m_imu;
     Interface::Estimator& m_estimator;
